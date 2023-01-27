@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>SpotX Games AR Experience!</title>
+
+    <!-- We've included a slightly modified version of A-Frame, which fixes some polish concerns -->
+    <script src="//cdn.8thwall.com/web/aframe/8frame-1.1.0.min.js"></script>
+    <script src="//cdn.8thwall.com/web/aframe/aframe-physics-system-4.0.1.min.js"></script>
+
+    <!-- XR Extras - provides utilities like load screen, almost there, and error handling.
+         See github.com/8thwall/web/tree/master/xrextras -->
+    <script src="//cdn.8thwall.com/web/xrextras/xrextras.js"></script>
+
+    <!-- 8thWall Web - Replace the app key here with your own app key -->
+    <script async src="//apps.8thwall.com/xrweb?appKey=tirdbaDAooelYE6JwxlonnWJVjB4FThiStxs9Mxys7CRa6pXeCfN8DLRBnZ6I8UorzQ7u5"></script>
+
+    <script src="//cdn.8thwall.com/web/iframe/iframe-inner.js"></script>
+
+    <script src="arComponents.js"></script>
+
+  </head>
+  <body>
+  <a-scene
+  id="scene"
+    tap-place
+    spotxcomponent
+    xrextras-gesture-detector
+    landing-page="mediaSrc: https://media.giphy.com/media/UIQc7mECaH5nw0Y03Y/giphy.mp4"
+    xrextras-loading
+    xrextras-runtime-error
+    renderer="antialias: true; colorManagement: true; physicallyCorrectLights: true;"
+    xrweb>
+
+    <a-assets>
+    <a-asset-item preload="auto" class="a-sound" id="mine_high_soundSrc" src="./sound_high.mp3" response-type="arraybuffer"></a-asset-item>
+    <a-asset-item preload="auto" class="a-sound" id="mine_medium_soundSrc" src="./sound_medium.mp3" response-type="arraybuffer"></a-asset-item>
+    <a-asset-item preload="auto" class="a-sound" id="mine_low_soundSrc" src="./sound_low.mp3" response-type="arraybuffer"></a-asset-item>
+
+    <a-asset-item preload="auto" class="a-sound" id="coin_sound1Src" src="./coin_sound_1.mp3" response-type="arraybuffer" sound=2></a-asset-item>
+    <a-asset-item preload="auto" class="a-sound" id="coin_sound2Src" src="./coin_sound_2.mp3" response-type="arraybuffer" sound=0.5></a-asset-item>
+    <a-asset-item preload="auto" class="a-sound" id="coin_sound3Src" src="./coin_sound_3.mp3" response-type="arraybuffer" sound=0.5></a-asset-item>
+
+      <a-asset-item id="Mine_high" src="./mine_High.glb"></a-asset-item>
+      <a-asset-item id="Mine_medium" src="./mine_Medium.glb"></a-asset-item>
+      <a-asset-item id="Mine_low" src="./mine_Low.glb"></a-asset-item>
+      <a-asset-item id="Mine_empty" src="./mine_holder.glb"></a-asset-item>
+      <a-asset-item id="coin_model" src="./Coin.glb"></a-asset-item>
+    </a-assets>
+
+
+    <a-camera
+      id="camera"
+      position="0 8 8"
+      raycaster="objects: .cantap"
+      cursor="fuse: false; rayOrigin: mouse;">
+      <a-sound id="mine_high_sound" src="#mine_high_soundSrc"></a-sound>
+      <a-sound id="mine_medium_sound" src="#mine_medium_soundSrc"></a-sound>
+      <a-sound id="mine_low_sound" src="#mine_low_soundSrc"></a-sound>
+      
+      <a-sound id="coin_sound1" src="#coin_sound1Src"></a-sound>
+      <a-sound id="coin_sound2" src="#coin_sound2Src"></a-sound>
+      <a-sound id="coin_sound3" src="#coin_sound3Src"></a-sound>
+    </a-camera>
+
+    <a-light type="ambient" intensity="3.95"></a-light>
+
+    <a-entity 
+    id="mine_high"
+    gltf-model="#Mine_high"
+    class="cantap"
+    scale="0.070 0.070 0.070"
+    position="0 0 -20"
+    shadow="cast: true; receive: false;">
+    </a-entity>
+
+    <a-entity 
+      id="mine_medium"
+      gltf-model="#Mine_medium"
+      class="cantap"
+      scale="0.06 0.060 0.060"
+      position="0 0 -20"
+      shadow="cast: true; receive: false;">
+    </a-entity>
+
+    <a-entity 
+      id="mine_low"
+      gltf-model="#Mine_low"
+      class="cantap"
+      scale="0.05 0.05 0.05"
+      position="0 0 -20"
+      shadow="cast: true; receive: false;">
+    </a-entity>
+
+    <a-entity 
+      id="mine_empty"
+      gltf-model="#Mine_empty"
+      class="cantap"
+      scale="0.04 0.04 0.04"
+      position="0 0 -20"
+      shadow="cast: true; receive: false;">
+    </a-entity>
+
+    <!-- <a-entity
+      id="textbox"
+      text="value: Click the Box!;">
+    </a-entity> -->
+
+    <a-entity
+      id="ground"
+      geometry="primitive: box"
+      material="shader: shadow; transparent: true; opacity: 0.4"
+      scale="1000 2 1000"
+      position="0 -1 0"
+      shadow="cast: false">
+    </a-entity>
+  </a-scene>
+</body>
+</html>
