@@ -76,6 +76,8 @@ This example assumes you have access to an 8thWall workspace through the[Lightsh
 
 - [ ] **IMPORTANT!** Make sure to double check the app key in your project: `demoARexperience.html` approx at line 16 matches the appkey in your 8thWall workspace!
 
+_The key included in this repo will work for localhost, but WILL NOT work on your deployed app. You will need your own key or check with someone from the VPS World Tour Staff to help get your deployed domain added to the shared workspace._
+
 ![demo at html file](./public/demo-ar-html.png)
 
 Make sure that you select the settings page on the left and open the "My App Key" section under Self-Hosting
