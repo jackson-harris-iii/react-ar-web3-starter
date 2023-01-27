@@ -1,7 +1,32 @@
 import { ChakraProvider } from '@chakra-ui/react';
 import Head from 'next/head';
 import Layout from '../Components/Layout';
+import {
+  EthereumClient,
+  modalConnectors,
+  walletConnectProvider,
+} from '@web3modal/ethereum';
+import { Web3Modal } from '@web3modal/react';
+import { configureChains, createClient, WagmiConfig } from 'wagmi';
+import { mainnet, polygon } from 'wagmi/chains';
+
 const App = ({ Component, pageProps }) => {
+  const chains = [mainnet, polygon];
+
+  // Wagmi client
+  const { provider } = configureChains(chains, [
+    walletConnectProvider({
+      projectId: process.env.NEXT_PUBLIC_WALLET_CONNECT_PROJECT_ID,
+    }),
+  ]);
+  const wagmiClient = createClient({
+    autoConnect: true,
+    connectors: modalConnectors({ appName: 'web3Modal', chains }),
+    provider,
+  });
+
+  // Web3Modal Ethereum Client
+  const ethereumClient = new EthereumClient(wagmiClient, chains);
   return (
     <>
       <Head>
@@ -30,10 +55,14 @@ const App = ({ Component, pageProps }) => {
         <script defer src="arComponents.js"></script>
       </Head>
       <ChakraProvider>
-        <Layout>
+        <WagmiConfig client={wagmiClient}>
           <Component {...pageProps} />
-        </Layout>
+        </WagmiConfig>
       </ChakraProvider>
+      <Web3Modal
+        projectId={process.env.NEXT_PUBLIC_WALLET_CONNECT_PROJECT_ID}
+        ethereumClient={ethereumClient}
+      />
     </>
   );
 };

@@ -13,6 +13,9 @@ import {
 } from '@chakra-ui/react';
 import Link from 'next/link';
 
+// more details on this here https://docs.walletconnect.com/2.0/web3modal/react/components
+import { Web3Button } from '@web3modal/react';
+
 const Navigation = () => {
   return (
     <Grid templateColumns="repeat(4, 1fr)" gap={6} p={5}>
@@ -38,7 +41,7 @@ const Navigation = () => {
       </GridItem>
 
       <GridItem justifySelf="end" colStart={5}>
-        <Button>Connect Wallet</Button>
+        <Web3Button />
       </GridItem>
     </Grid>
   );

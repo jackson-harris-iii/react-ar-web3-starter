@@ -17,12 +17,16 @@
     "@emotion/react": "^11.10.5",
     "@emotion/styled": "^11.10.5",
     "@types/react": "^18.0.27",
+    "@web3modal/ethereum": "^2.0.0",
+    "@web3modal/react": "^2.0.0",
     "cross-env": "^7.0.3",
+    "ethers": "^5.7.2",
     "framer-motion": "^8.5.3",
     "mkcert": "^1.5.1",
     "next": "^13.1.5",
     "react": "^18.2.0",
-    "react-dom": "^18.2.0"
+    "react-dom": "^18.2.0",
+    "wagmi": "^0.11.0"
   },
   "devDependencies": {
     "@types/node": "^18.11.18",

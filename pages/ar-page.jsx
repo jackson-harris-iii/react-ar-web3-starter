@@ -1,6 +1,14 @@
+import { Button } from '@chakra-ui/react';
+import Link from 'next/link';
 const ArPage = () => {
 
   return (
+    <>
+    <Link href="/">
+    <Button>
+      {'<--'}
+    </Button>
+    </Link>
     <div
           className="mh-100 w-100"
           style={{ height: "100%", width: "400px" }}
@@ -13,6 +21,7 @@ const ArPage = () => {
             </iframe>`,
           }}
         />
+        </>
   )
 }
 
