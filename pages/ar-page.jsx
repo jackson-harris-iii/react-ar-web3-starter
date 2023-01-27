@@ -9,7 +9,7 @@ const ArPage = () => {
             id="my-iframe"
             style="border: 0; width: 100%; height: 100%"
             allow="camera;microphone;gyroscope;accelerometer;"
-            src="spotxARexperience.html">
+            src="demoARexperience.html">
             </iframe>`,
           }}
         />
