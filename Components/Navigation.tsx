@@ -15,33 +15,51 @@ import Link from 'next/link';
 
 // more details on this here https://docs.walletconnect.com/2.0/web3modal/react/components
 import { Web3Button } from '@web3modal/react';
+import { useWeb3AuthHook } from '../utils/web3AuthContext';
+import { useAccount } from 'wagmi';
 
 const Navigation = () => {
+  const pages = [
+    { href: '/', name: 'Home' },
+    { href: '/ar-page', name: 'AR Page' },
+    { href: '/account-info', name: 'Account Info' },
+  ];
+  const { address, isConnecting, isDisconnected } = useAccount();
+  const { w3aAddress, web3authLogin, web3AuthLogout } = useWeb3AuthHook();
   return (
-    <Grid templateColumns="repeat(4, 1fr)" gap={6} p={5}>
+    <Grid templateColumns="repeat(1fr 3fr 1fr)" gap={2} p={5}>
       <GridItem>
         <Heading size="xl">AR Web3 Starter</Heading>
       </GridItem>
 
       <GridItem justifySelf="start">
         <Container>
-          <Grid templateColumns="repeat(2, 1fr)" gap={4} pt={3}>
-            <Link href="/">
-              <GridItem>
-                <Text as="i">Home</Text>
-              </GridItem>
-            </Link>
-            <GridItem>
-              <Link href="/ar-page">
-                <Text as="i">AR Page</Text>
+          <Grid templateColumns="repeat(5, 1fr)" gap={2} pt={3}>
+            {pages.map((page) => (
+              <Link href={page.href}>
+                <GridItem>
+                  <Text as="i">{page.name}</Text>
+                </GridItem>
               </Link>
-            </GridItem>
+            ))}
           </Grid>
         </Container>
       </GridItem>
 
-      <GridItem justifySelf="end" colStart={5}>
-        <Web3Button />
+      <GridItem justifySelf="end" colStart={5} p={2} gap={1}>
+        {w3aAddress ? (
+          <Button>Logout</Button>
+        ) : (
+          <>
+            <Web3Button />
+            {/* If we're logged in with wallet connect we don't want to show the Torus login button */}
+            {address ? null : (
+              <Button ml={1} mb={2} onClick={web3authLogin}>
+                Web2 Sign-In
+              </Button>
+            )}
+          </>
+        )}
       </GridItem>
     </Grid>
   );

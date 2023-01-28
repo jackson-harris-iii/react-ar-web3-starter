@@ -9,6 +9,7 @@ import {
 import { Web3Modal } from '@web3modal/react';
 import { configureChains, createClient, WagmiConfig } from 'wagmi';
 import { mainnet, polygon } from 'wagmi/chains';
+import { useWeb3AuthHook, web3AuthContext } from '../utils/web3AuthContext';
 
 const App = ({ Component, pageProps }) => {
   const chains = [mainnet, polygon];
@@ -19,6 +20,7 @@ const App = ({ Component, pageProps }) => {
       projectId: process.env.NEXT_PUBLIC_WALLET_CONNECT_PROJECT_ID,
     }),
   ]);
+
   const wagmiClient = createClient({
     autoConnect: true,
     connectors: modalConnectors({ appName: 'web3Modal', chains }),
@@ -27,6 +29,7 @@ const App = ({ Component, pageProps }) => {
 
   // Web3Modal Ethereum Client
   const ethereumClient = new EthereumClient(wagmiClient, chains);
+
   return (
     <>
       <Head>
@@ -56,7 +59,9 @@ const App = ({ Component, pageProps }) => {
       </Head>
       <ChakraProvider>
         <WagmiConfig client={wagmiClient}>
-          <Component {...pageProps} />
+          <web3AuthContext.Provider value={useWeb3AuthHook}>
+            <Component {...pageProps} />
+          </web3AuthContext.Provider>
         </WagmiConfig>
       </ChakraProvider>
       <Web3Modal
