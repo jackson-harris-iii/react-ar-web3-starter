@@ -10,6 +10,7 @@ import {
   Grid,
   GridItem,
   Heading,
+  Spinner,
 } from '@chakra-ui/react';
 import Link from 'next/link';
 
@@ -17,6 +18,7 @@ import Link from 'next/link';
 import { Web3Button } from '@web3modal/react';
 import { useWeb3AuthHook } from '../utils/web3AuthContext';
 import { useAccount } from 'wagmi';
+import { useContext, useEffect } from 'react';
 
 const Navigation = () => {
   const pages = [
@@ -25,7 +27,16 @@ const Navigation = () => {
     { href: '/account-info', name: 'Account Info' },
   ];
   const { address, isConnecting, isDisconnected } = useAccount();
-  const { w3aAddress, web3authLogin, web3AuthLogout } = useWeb3AuthHook();
+  const {
+    w3aAddress,
+    web3authLogin,
+    web3AuthLogout,
+    web3authProvider,
+    gettingAccount,
+  } = useWeb3AuthHook();
+
+  useEffect(() => {}, [web3authProvider]);
+
   return (
     <Grid templateColumns="repeat(1fr 3fr 1fr)" gap={2} p={5}>
       <GridItem>
@@ -35,8 +46,8 @@ const Navigation = () => {
       <GridItem justifySelf="start">
         <Container>
           <Grid templateColumns="repeat(5, 1fr)" gap={2} pt={3}>
-            {pages.map((page) => (
-              <Link href={page.href}>
+            {pages.map((page, index) => (
+              <Link href={page.href} key={index}>
                 <GridItem>
                   <Text as="i">{page.name}</Text>
                 </GridItem>
@@ -48,7 +59,7 @@ const Navigation = () => {
 
       <GridItem justifySelf="end" colStart={5} p={2} gap={1}>
         {w3aAddress ? (
-          <Button>Logout</Button>
+          <Button onClick={web3AuthLogout}>Logout</Button>
         ) : (
           <>
             <Web3Button />
@@ -60,6 +71,11 @@ const Navigation = () => {
             )}
           </>
         )}
+        {gettingAccount ? (
+          <>
+            <Spinner />
+          </>
+        ) : null}
       </GridItem>
     </Grid>
   );

@@ -9,7 +9,7 @@ import {
 import { Web3Modal } from '@web3modal/react';
 import { configureChains, createClient, WagmiConfig } from 'wagmi';
 import { mainnet, polygon } from 'wagmi/chains';
-import { useWeb3AuthHook, web3AuthContext } from '../utils/web3AuthContext';
+import { web3AuthContext, useWeb3AuthHook } from '../utils/web3AuthContext';
 
 const App = ({ Component, pageProps }) => {
   const chains = [mainnet, polygon];
@@ -59,9 +59,7 @@ const App = ({ Component, pageProps }) => {
       </Head>
       <ChakraProvider>
         <WagmiConfig client={wagmiClient}>
-          <web3AuthContext.Provider value={useWeb3AuthHook}>
-            <Component {...pageProps} />
-          </web3AuthContext.Provider>
+          <Component {...pageProps} />
         </WagmiConfig>
       </ChakraProvider>
       <Web3Modal

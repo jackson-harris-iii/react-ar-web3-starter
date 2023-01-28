@@ -12,9 +12,10 @@ const Homepage = () => {
   //hook to access web3auth user address
   const { w3aAddress, w3aUserInfo, w3aAuthenticatedUser  } = useWeb3AuthHook()
 
+  //force update and do cool things when we have an address
   useEffect(() => {
 
-  },[w3aAddress])
+  },[address, w3aAddress])
 
   if (isConnecting) {
     return <Spinner
@@ -30,7 +31,7 @@ const Homepage = () => {
     return <Layout>Hola {address || w3aAddress} !</Layout>  
   }
   
-  if (isDisconnected) {
+  if (isDisconnected || !w3aAddress) {
     return <Layout>Connect or create a wallet to get started</Layout>    
   }
 

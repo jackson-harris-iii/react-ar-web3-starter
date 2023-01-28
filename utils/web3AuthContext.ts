@@ -7,13 +7,13 @@ import RPC from './ethersRPC';
 export const useWeb3AuthHook = () => {
   const [web3auth, setWeb3auth] = useState<Web3Auth | null>(null);
 
-  const [provider, setProvider] = useState<SafeEventEmitterProvider | null>(
-    null
-  );
+  const [web3authProvider, setweb3authProvider] =
+    useState<SafeEventEmitterProvider | null>(null);
 
   const [w3aAddress, setW3aAddress] = useState(null);
   const [w3aAuthenticatedUser, setW3aAuthenticatedUser] = useState(null);
   const [w3aUserInfo, setW3aUserInfo] = useState(null);
+  const [gettingAccount, setGettingAccount] = useState(false);
 
   useEffect(() => {
     const init = async () => {
@@ -39,7 +39,7 @@ export const useWeb3AuthHook = () => {
         setWeb3auth(web3auth);
 
         await web3auth.initModal();
-        setProvider(web3auth.provider);
+        setweb3authProvider(web3auth.provider);
       } catch (error) {
         console.error(error);
       }
@@ -48,17 +48,20 @@ export const useWeb3AuthHook = () => {
     init();
   }, []);
 
+  useEffect(() => {
+    if (web3authProvider) {
+      setGettingAccount(true);
+      getAccounts();
+    }
+  }, [web3authProvider]);
+
   const web3authLogin = async () => {
     if (!web3auth) {
       console.log('web3auth not initialized yet');
       return;
     }
     const web3authProvider = await web3auth.connect();
-    setProvider(web3authProvider);
-
-    if (provider) {
-      await getAccounts();
-    }
+    setweb3authProvider(web3authProvider);
   };
 
   const web3AuthLogout = async () => {
@@ -66,8 +69,13 @@ export const useWeb3AuthHook = () => {
       console.log('web3auth not initialized yet');
       return;
     }
-    await web3auth.logout();
-    setProvider(null);
+    try {
+      await web3auth.logout();
+      setweb3authProvider(null);
+      setW3aAddress(null);
+    } catch (e) {
+      console.log(e);
+    }
   };
 
   const getUserInfo = async () => {
@@ -89,24 +97,25 @@ export const useWeb3AuthHook = () => {
   };
 
   const getChainId = async () => {
-    if (!provider) {
-      alert('provider not initialized yet');
+    if (!web3authProvider) {
+      alert('web3authProvider not initialized yet');
       return;
     }
-    const rpc = new RPC(provider);
+    const rpc = new RPC(web3authProvider);
     const chainId = await rpc.getChainId();
     alert(chainId);
   };
 
   const getAccounts = async () => {
-    if (!provider) {
-      alert('provider not initialized yet');
+    if (!web3authProvider) {
+      alert('web3authProvider not initialized yet');
       return;
     }
-    const rpc = new RPC(provider);
+    const rpc = new RPC(web3authProvider);
     try {
       const address = await rpc.getAccounts();
       setW3aAddress(address);
+      setGettingAccount(false);
       console.log('account address', address);
     } catch (e) {
       console.log(e);
@@ -114,31 +123,31 @@ export const useWeb3AuthHook = () => {
   };
 
   const getBalance = async () => {
-    if (!provider) {
-      alert('provider not initialized yet');
+    if (!web3authProvider) {
+      alert('web3authProvider not initialized yet');
       return;
     }
-    const rpc = new RPC(provider);
+    const rpc = new RPC(web3authProvider);
     const balance = await rpc.getBalance();
     alert(balance);
   };
 
   const sendTransaction = async () => {
-    if (!provider) {
-      alert('provider not initialized yet');
+    if (!web3authProvider) {
+      alert('web3authProvider not initialized yet');
       return;
     }
-    const rpc = new RPC(provider);
+    const rpc = new RPC(web3authProvider);
     const receipt = await rpc.sendTransaction();
     alert(receipt);
   };
 
   const signMessage = async () => {
-    if (!provider) {
-      alert('provider not initialized yet');
+    if (!web3authProvider) {
+      alert('web3authProvider not initialized yet');
       return;
     }
-    const rpc = new RPC(provider);
+    const rpc = new RPC(web3authProvider);
     const signedMessage = await rpc.signMessage();
     alert(signedMessage);
   };
@@ -153,9 +162,7 @@ export const useWeb3AuthHook = () => {
     signMessage,
     w3aUserInfo,
     w3aAuthenticatedUser,
+    web3authProvider,
+    gettingAccount,
   };
 };
-
-export const web3AuthContext = createContext(
-  useWeb3AuthHook // default value
-);
