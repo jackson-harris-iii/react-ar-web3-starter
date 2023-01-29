@@ -9,7 +9,6 @@ import {
 import { Web3Modal } from '@web3modal/react';
 import { configureChains, createClient, WagmiConfig } from 'wagmi';
 import { mainnet, polygon } from 'wagmi/chains';
-import { web3AuthContext, useWeb3AuthHook } from '../utils/web3AuthContext';
 
 const App = ({ Component, pageProps }) => {
   const chains = [mainnet, polygon];
