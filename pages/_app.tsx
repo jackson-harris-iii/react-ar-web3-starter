@@ -55,7 +55,7 @@ const App = ({ Component, pageProps }) => {
           src="//apps.8thwall.com/xrweb?appKey=tirdbaDAooelYE6JwxlonnWJVjB4FThiStxs9Mxys7CRa6pXeCfN8DLRBnZ6I8UorzQ7u5"
         ></script>
 
-        <script defer src="arComponents.js"></script>
+        <script defer src="arComponent.js"></script>
       </Head>
       <ChakraProvider>
         <WagmiConfig client={wagmiClient}>

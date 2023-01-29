@@ -1,4 +1,4 @@
-import { Button } from '@chakra-ui/react';
+import { Button, Container, Grid, GridItem, Box } from '@chakra-ui/react';
 import Link from 'next/link';
 const ArPage = () => {
 
@@ -9,9 +9,14 @@ const ArPage = () => {
       {'<--'}
     </Button>
     </Link>
-    <div
+    <Container fluid mt={8} >
+      <Grid fluid justifyItems={'center'}>
+        <GridItem>
+    <Box
+    h="720px"
+    w="450px"
           className="mh-100 w-100"
-          style={{ height: "100%", width: "400px" }}
+          style={{ height: "720px", width: "400px" }}
           dangerouslySetInnerHTML={{
             __html: `<iframe
             id="my-iframe"
@@ -21,6 +26,9 @@ const ArPage = () => {
             </iframe>`,
           }}
         />
+              </GridItem>
+      </Grid>  
+  </Container>
         </>
   )
 }

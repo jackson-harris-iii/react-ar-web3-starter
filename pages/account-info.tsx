@@ -1,6 +1,6 @@
 import Layout from '../Components/Layout';
 import { useAccount, useBalance } from 'wagmi';
-import { Spinner } from '@chakra-ui/react';
+import { Container, Grid, GridItem, Spinner } from '@chakra-ui/react';
 import { useEffect } from 'react';
 
 const AccountInfo = () => {
@@ -11,13 +11,19 @@ const AccountInfo = () => {
 
   if (isConnecting || isLoading) {
     return (
-      <Spinner
-        thickness="4px"
-        speed="0.65s"
-        emptyColor="gray.200"
-        color="blue.500"
-        size="xl"
-      />
+      <Container mt={8}>
+        <Grid justifyItems={'center'}>
+          <GridItem>
+            <Spinner
+              thickness="4px"
+              speed="0.65s"
+              emptyColor="gray.200"
+              color="blue.500"
+              size="xl"
+            />
+          </GridItem>
+        </Grid>
+      </Container>
     );
   }
 
