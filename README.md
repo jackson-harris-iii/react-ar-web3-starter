@@ -1,5 +1,7 @@
 # React AR Web3 Starter
 
+:earth_americas: [Live App Here](https://react-ar-web3-starter.vercel.app/)
+
 ## Getting started
 
 To make it easy for you to get started with [8thWall](https://www.8thwall.com/) AR for web and Web3 here's a repo to get you up and running with a [self-hosted](https://www.8thwall.com/docs/web/#self-hosted-domains) version of 8thWall. It includes some pre-configured web3 libraries and it is built using [Next.js](https://nextjs.org/) so you can deploy easily to [Vercel](https://vercel.com/)!
