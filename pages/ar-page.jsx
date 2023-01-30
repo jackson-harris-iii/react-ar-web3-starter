@@ -8,9 +8,6 @@ const ArPage = () => {
   const [seconds, setSeconds] = useState(15)
   const [isActive, setIsActive] = useState(false)
   const [gamerOver, setGameOver] = useState(false)
-  const [loading, setLoading] = useState(false)
-  const [dialogModal, setDialogModal] = useState(false)
-  const [dialogModalUnChecked, setDialogModalUnChecked] = useState(true)
   const IFRAME_ID = "my-iframe"
 
   useEffect(() => {
