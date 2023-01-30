@@ -1,6 +1,7 @@
-import { Button, Container, Grid, GridItem, Box } from '@chakra-ui/react';
+import { Button, Container, Grid, GridItem, Box, IconButton } from '@chakra-ui/react';
 import Link from 'next/link';
 import { useState, useEffect } from 'react';
+import { ArrowBackIcon } from '@chakra-ui/icons';
 const ArPage = () => {
 
   const [earnedPoints, setEarnedPoints] = useState(0)
@@ -65,9 +66,12 @@ const ArPage = () => {
   return (
     <>
     <Link href="/">
-    <Button>
+    <IconButton
+    size={'md'}
+    icon={<ArrowBackIcon/>}
+    >
       {'<--'}
-    </Button>
+    </IconButton>
     </Link>
     <Container fluid mt={8} >
       <Grid fluid justifyItems={'center'}>

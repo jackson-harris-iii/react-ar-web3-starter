@@ -39,7 +39,13 @@ const Homepage = () => {
   }
   
   if (isDisconnected || !w3aAddress) {
-    return <Layout>Connect or create a wallet to get started</Layout>    
+    return (
+    <Layout>
+      <Container mt={5}>
+        Connect or create a wallet to get started 
+      </Container>
+    </Layout>
+    )    
   }
 
 };
