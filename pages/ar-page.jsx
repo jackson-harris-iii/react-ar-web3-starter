@@ -1,4 +1,4 @@
-import { Button, Container, Grid, GridItem, Box, IconButton } from '@chakra-ui/react';
+import { Button, Container, Grid, GridItem, Box, IconButton,Center } from '@chakra-ui/react';
 import Link from 'next/link';
 import { useState, useEffect } from 'react';
 import { ArrowBackIcon } from '@chakra-ui/icons';
@@ -80,23 +80,22 @@ const ArPage = () => {
         <br />
         Points: {earnedPoints}
         </GridItem>
-        <GridItem>
-    <Box
-    h="720px"
-    w="450px"
-          className="mh-100 w-100"
-          style={{ height: "720px", width: "400px" }}
+
+      </Grid>  
+      <Center>
+          <Box
+          // style={{ height: "75vh", width: "100vw" }}
           dangerouslySetInnerHTML={{
             __html: `<iframe
             id="my-iframe"
-            style="border: 0; width: 100%; height: 100%"
+            style="border: 0; width: 75vh; height: 75vh"
             allow="camera;microphone;gyroscope;accelerometer;"
             src="demoARexperience.html">
             </iframe>`,
           }}
         />
-              </GridItem>
-      </Grid>  
+
+        </Center>
   </Container>
         </>
   )
