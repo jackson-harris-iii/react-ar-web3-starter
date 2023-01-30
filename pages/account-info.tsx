@@ -28,7 +28,7 @@ const AccountInfo = () => {
   }
 
   if (address) {
-    return <Layout>Hola {address} !</Layout>;
+    return <Layout>Account info page {address} !</Layout>;
   }
 
   if (isDisconnected) {

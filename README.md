@@ -18,7 +18,7 @@ This example assumes you have access to an 8thWall workspace through the[Lightsh
   yarn
   ```
 
-- [ ] Install [mkcert](https://github.com/FiloSottile/mkcert) globally
+- [ ] Install [mkcert](https://github.com/FiloSottile/mkcert) globally, please click mkcert link to see docs for Linux and Windows.
 
   On macOS, use [Homebrew](https://brew.sh/)
 
