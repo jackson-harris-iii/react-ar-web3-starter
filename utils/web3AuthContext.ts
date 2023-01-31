@@ -18,6 +18,7 @@ export const useWeb3AuthHook = () => {
   useEffect(() => {
     const init = async () => {
       const clientId = process.env.NEXT_PUBLIC_WEB3_AUTH_ID;
+      // const clientId = process.env.NEXT_PUBLIC_WEB3_AUTH_ID;
       try {
         const web3auth = new Web3Auth({
           clientId,
@@ -36,29 +37,21 @@ export const useWeb3AuthHook = () => {
         // });
 
         const torusWalletAdapter = new TorusWalletAdapter({
-          adapterSettings: {
-            buttonPosition: 'bottom-left',
-          },
-          loginSettings: {
-            verifier: 'google',
-          },
           initParams: {
-            buildEnv: 'testing',
+            // type WhiteLabelParams
+            whiteLabel: {
+              theme: {
+                isDark: true,
+                colors: { torusBrand1: '#FFA500' },
+              },
+              logoDark: 'https://images.web3auth.io/web3auth-logo-w.svg',
+              logoLight: 'https://images.web3auth.io/web3auth-logo-w-light.svg',
+              topupHide: true,
+              featuredBillboardHide: true,
+              disclaimerHide: true,
+              defaultLanguage: 'en',
+            },
           },
-          chainConfig: {
-            chainNamespace: CHAIN_NAMESPACES.EIP155,
-            chainId: '0x1',
-            rpcTarget: 'https://rpc.ankr.com/eth',
-            // Avoid using public rpcTarget in production.
-            // Use services like Infura, Quicknode etc
-            displayName: 'Ethereum Mainnet',
-            blockExplorer: 'https://etherscan.io',
-            ticker: 'ETH',
-            tickerName: 'Ethereum',
-          },
-          clientId: process.env.NEXT_PUBLIC_WEB3_AUTH_ID,
-          sessionTime: 3600, // 1 hour in seconds
-          web3AuthNetwork: 'cyan',
         });
         web3auth.configureAdapter(torusWalletAdapter);
 
