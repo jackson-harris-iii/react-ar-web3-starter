@@ -42,7 +42,7 @@ const Homepage = () => {
     return (
     <Layout>
       <Container mt={5}>
-        This is a demo now...Connect or create a wallet to get started 
+        This is a VPS world tour DEMO now...Connect or create a wallet to get started 
       </Container>
     </Layout>
     )    
