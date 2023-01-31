@@ -1,7 +1,7 @@
 import { Web3Auth, Web3AuthOptions } from '@web3auth/modal';
 import { CHAIN_NAMESPACES, SafeEventEmitterProvider } from '@web3auth/base';
 import { useState, useEffect, createContext } from 'react';
-import { OpenloginAdapter } from '@web3auth/openlogin-adapter';
+import { TorusWalletAdapter } from '@web3auth/torus-evm-adapter';
 import RPC from './ethersRPC';
 
 export const useWeb3AuthHook = () => {
@@ -29,12 +29,38 @@ export const useWeb3AuthHook = () => {
           },
         });
 
-        const openloginAdapter = new OpenloginAdapter({
-          loginSettings: {
-            mfaLevel: 'none', // Pass on the mfa level of your choice: default, optional, mandatory, none
+        // const openloginAdapter = new OpenloginAdapter({
+        //   loginSettings: {
+        //     mfaLevel: 'none', // Pass on the mfa level of your choice: default, optional, mandatory, none
+        //   },
+        // });
+
+        const torusWalletAdapter = new TorusWalletAdapter({
+          adapterSettings: {
+            buttonPosition: 'bottom-left',
           },
+          loginSettings: {
+            verifier: 'google',
+          },
+          initParams: {
+            buildEnv: 'testing',
+          },
+          chainConfig: {
+            chainNamespace: CHAIN_NAMESPACES.EIP155,
+            chainId: '0x1',
+            rpcTarget: 'https://rpc.ankr.com/eth',
+            // Avoid using public rpcTarget in production.
+            // Use services like Infura, Quicknode etc
+            displayName: 'Ethereum Mainnet',
+            blockExplorer: 'https://etherscan.io',
+            ticker: 'ETH',
+            tickerName: 'Ethereum',
+          },
+          clientId: 'YOUR_WEB3AUTH_CLIENT_ID',
+          sessionTime: 3600, // 1 hour in seconds
+          web3AuthNetwork: 'cyan',
         });
-        web3auth.configureAdapter(openloginAdapter);
+        web3auth.configureAdapter(torusWalletAdapter);
 
         setWeb3auth(web3auth);
 

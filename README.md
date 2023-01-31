@@ -42,9 +42,16 @@ This example assumes you have access to an 8thWall workspace through the[Lightsh
   ```
 
 - [ ] Start server
+
   ```
   node server.js
   ```
+
+  What's going on? Learn more [here](https://dev.to/nakib/using-https-on-next-js-local-development-server-bcd), medium article overview of mkcert installation.
+
+- [ ] setup 8thWall account
+
+- [ ] setup wallet connect or web3Auth (formerly Torus)
 
 ## Deployment
 
@@ -85,3 +92,7 @@ _The key included in this repo will work for localhost, but WILL NOT work on you
 Make sure that you select the settings page on the left and open the "My App Key" section under Self-Hosting
 
 ![settings page](./public/settings-page.png)
+
+- [ ] add .env files to Vercel
+
+![settings page](./public/envs.png)
