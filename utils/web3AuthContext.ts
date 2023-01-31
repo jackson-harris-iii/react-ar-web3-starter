@@ -56,7 +56,7 @@ export const useWeb3AuthHook = () => {
             ticker: 'ETH',
             tickerName: 'Ethereum',
           },
-          clientId: 'YOUR_WEB3AUTH_CLIENT_ID',
+          clientId: process.env.NEXT_PUBLIC_WEB3_AUTH_ID,
           sessionTime: 3600, // 1 hour in seconds
           web3AuthNetwork: 'cyan',
         });
