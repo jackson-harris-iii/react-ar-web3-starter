@@ -54,10 +54,10 @@ const App = ({ Component, pageProps }) => {
         <script defer src="//cdn.8thwall.com/web/xrextras/xrextras.js"></script>
 
         {/* <!-- 8thWall Web - Replace the app key here with your own app key --> */}
-        <script
+        {/* <script
           defer
           src="//apps.8thwall.com/xrweb?appKey=tirdbaDAooelYE6JwxlonnWJVjB4FThiStxs9Mxys7CRa6pXeCfN8DLRBnZ6I8UorzQ7u5"
-        ></script>
+        ></script> */}
 
         <script defer src="arComponent.js"></script>
         <link
