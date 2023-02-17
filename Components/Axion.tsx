@@ -7,12 +7,17 @@ import {
   IconButton,
   Center,
   Flex,
-  HStack,
+  Text,
   Modal,
   useDisclosure,
   ModalContent,
   ModalOverlay,
   useToast,
+  Card,
+  CardFooter,
+  Image,
+  CardBody,
+  SimpleGrid,
 } from '@chakra-ui/react';
 import Link from 'next/link';
 import { useState, useEffect } from 'react';
@@ -20,6 +25,7 @@ import { ArrowBackIcon } from '@chakra-ui/icons';
 import { Icon } from '@chakra-ui/react';
 import { GrMapLocation, GrMoney } from 'react-icons/gr';
 import { CgProfile } from 'react-icons/cg';
+import { GiSwapBag } from 'react-icons/gi';
 import { BsShop } from 'react-icons/bs';
 import { MdOutlineLeaderboard } from 'react-icons/md';
 import RtsView from '../Components/RtsView';
@@ -48,6 +54,14 @@ const Axion = () => {
   const [userScoresRef, setUserScoresRef] =
     useState<CollectionReference<DocumentData>>();
   const [users, setUsers] = useState<CollectionReference<DocumentData>>();
+  const [player, setPlayer] = useState<DocumentData>();
+
+  const shopItems = [
+    { name: 'Limited Set', price: 2000, image: './limited-frame.png' },
+    { name: 'Mystery Pack', price: 15000, image: './mystery-pack.png' },
+    { name: 'Coin Getter', price: 50000, image: './coin-getter.png' },
+    { name: 'Pocket Watch', price: 75000, image: './watch.png' },
+  ];
 
   // Modal Handlers
   const { isOpen, onOpen, onClose } = useDisclosure();
@@ -85,14 +99,23 @@ const Axion = () => {
       snapshotListenOptions: { includeMetadataChanges: true },
     }
   );
+  const userRef = doc(getFirestore(firebaseApp), 'users', address);
 
   useEffect(() => {
-    if (!value) {
-      const userRef = doc(getFirestore(firebaseApp), 'users', address);
+    console.log('value', value);
+    console.log('loading', loading);
+    console.log('error', error);
+    if (!value && !loading) {
+      console.log('loading', loading);
+      console.log('no player');
       setDoc(userRef, {
         wallet: address,
-        coins: earnedPoints,
       });
+    }
+
+    if (value && !loading) {
+      let player = value?.data();
+      setPlayer(player);
     }
     console.log('value', value?.data());
   }, [value]);
@@ -114,15 +137,6 @@ const Axion = () => {
     const wayspotArray = Array.from(wayspotSet);
     setNearbyWayspots(wayspotArray);
   };
-
-  // useEffect(() => {
-  //   //@ts-ignore
-  //   window.XRIFrame.registerXRIFrame(IFRAME_ID);
-  //   return () => {
-  //     //@ts-ignore
-  //     window.XRIFrame.deregisterXRIFrame();
-  //   };
-  // }, []);
 
   // get player location from 8thWall
   useEffect(() => {
@@ -229,6 +243,18 @@ const Axion = () => {
     return () => clearInterval(interval);
   }, [isActive, seconds]);
 
+  const purchaseItem = (item) => {
+    console.log('purchase attempt', item);
+    if (player.coins < item.price) {
+      toast({
+        title: `Not Enough Coins`,
+        status: 'error',
+        isClosable: true,
+        description: `You need more coins to purchase this...`,
+      });
+    }
+  };
+
   return (
     <>
       <Center>
@@ -276,7 +302,7 @@ const Axion = () => {
               </Button>
 
               <Button variant="outlined" onClick={onOpenShop}>
-                <Icon as={BsShop} sx={{ fontSize: '3em' }} />
+                <Icon as={GiSwapBag} sx={{ fontSize: '3em' }} />
               </Button>
 
               <Button variant="outlined" onClick={onOpenProfile}>
@@ -307,25 +333,90 @@ const Axion = () => {
         </ModalContent>
       </Modal>
       {/* SHOP MODAL */}
-      <Modal isOpen={isOpenShop} onClose={onCloseShop}>
+      <Modal isOpen={isOpenShop} onClose={onCloseShop} size="full">
         <ModalOverlay />
         <ModalContent>
-          <Grid>
-            <GridItem>
-              <h2>Wares For Sale</h2>
-              <span>
-                <Icon as={GrMoney} /> {earnedPoints}
-              </span>
+          <Grid p={2} h="95vh" templateRows="repeat(12, 1fr)">
+            <GridItem rowSpan={1}>
+              <IconButton
+                size={'md'}
+                icon={<ArrowBackIcon />}
+                aria-label={''}
+                onClick={onCloseShop}
+              >
+                {'<--'}
+              </IconButton>
+            </GridItem>
+            <GridItem rowSpan={7}>
+              <Grid>
+                <GridItem>
+                  <Center>
+                    <Text fontSize={'3xl'}>Shop</Text>
+                  </Center>
+                </GridItem>
+
+                <SimpleGrid columns={[3, null, 4]} gap={3}>
+                  {shopItems.map((item, index) => (
+                    <Box key={index} onClick={() => purchaseItem(item)}>
+                      <Card>
+                        <Center>
+                          <Image
+                            h="175px"
+                            w="125px"
+                            src={`${item.image}`}
+                            shadow="xl"
+                            mb={3}
+                          />
+                        </Center>
+                        <Center>
+                          <Text fontSize={'sm'}>{item.name}</Text>
+                        </Center>
+                        <Center>
+                          <Text fontSize={'sm'}>
+                            <Icon as={GrMoney} /> {item.price}
+                          </Text>{' '}
+                        </Center>
+                      </Card>
+                    </Box>
+                  ))}
+                </SimpleGrid>
+              </Grid>
+            </GridItem>
+
+            <GridItem rowSpan={4}>
+              <Card>
+                <GridItem>
+                  <Center>
+                    <Text fontSize={'3xl'}>Bag</Text>
+                  </Center>
+                </GridItem>
+                <GridItem>
+                  <Text fontSize={'2xl'}>
+                    <Icon as={GrMoney} /> {player?.coins}
+                  </Text>
+                </GridItem>
+              </Card>
             </GridItem>
           </Grid>
         </ModalContent>
       </Modal>
 
       {/* PROFILE MODAL */}
-
-      <Modal isOpen={isOpenProfile} onClose={onCloseProfile}>
+      <Modal isOpen={isOpenProfile} onClose={onCloseProfile} size="full">
         <ModalOverlay />
         <ModalContent>
+          <Grid p={2} h="95vh" templateRows="repeat(12, 1fr)">
+            <GridItem rowSpan={1}>
+              <IconButton
+                size={'md'}
+                icon={<ArrowBackIcon />}
+                aria-label={''}
+                onClick={onCloseProfile}
+              >
+                {'<--'}
+              </IconButton>
+            </GridItem>
+          </Grid>
           <Grid>
             <GridItem>
               <h4>Your Items</h4>
@@ -341,15 +432,31 @@ const Axion = () => {
           </Grid>
         </ModalContent>
       </Modal>
-      {/* LEADERBOARD MODAL */}
 
-      <Modal isOpen={isOpenProfile} onClose={onCloseProfile}>
+      {/* LEADERBOARD MODAL */}
+      <Modal
+        isOpen={isOpenLeaderBoard}
+        onClose={onCloseLeaderBoard}
+        size="full"
+      >
         <ModalOverlay />
         <ModalContent>
-          <Grid>
-            <GridItem>
-              <h4>Scores</h4>
+          <Grid p={2} h="95vh" templateRows="repeat(12, 1fr)">
+            <GridItem rowSpan={1}>
+              <IconButton
+                size={'md'}
+                icon={<ArrowBackIcon />}
+                aria-label={''}
+                onClick={onCloseLeaderBoard}
+              >
+                {'<--'}
+              </IconButton>
             </GridItem>
+            <Grid>
+              <GridItem>
+                <h4>Scores</h4>
+              </GridItem>
+            </Grid>
           </Grid>
         </ModalContent>
       </Modal>
