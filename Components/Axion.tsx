@@ -28,7 +28,9 @@ import { useAccount } from 'wagmi';
 import { useDocument } from 'react-firebase-hooks/firestore';
 import {
   collection,
+  CollectionReference,
   doc,
+  DocumentData,
   getFirestore,
   setDoc,
   updateDoc,
@@ -43,6 +45,9 @@ const Axion = () => {
   const [playerPosition, setPlayerPosition] = useState(null);
   const [nearbyWayspots, setNearbyWayspots] = useState([]);
   const [worldHidden, setWorldHidden] = useState(null);
+  const [userScoresRef, setUserScoresRef] =
+    useState<CollectionReference<DocumentData>>();
+  const [users, setUsers] = useState<CollectionReference<DocumentData>>();
 
   // Modal Handlers
   const { isOpen, onOpen, onClose } = useDisclosure();
@@ -64,8 +69,15 @@ const Axion = () => {
 
   const { address, isConnecting, isDisconnected } = useAccount();
 
-  const userScoresRef = collection(getFirestore(firebaseApp), 'userScores');
-  const users = collection(getFirestore(firebaseApp), 'users');
+  useEffect(() => {
+    const initDbRefs = async () => {
+      let userScoresRef = collection(getFirestore(firebaseApp), 'userScores');
+      setUserScoresRef(userScoresRef);
+      let usersCol = collection(getFirestore(firebaseApp), 'users');
+      setUsers(usersCol);
+    };
+    initDbRefs();
+  }, []);
 
   const [value, loading, error] = useDocument(
     doc(getFirestore(firebaseApp), 'users', address),
@@ -73,15 +85,17 @@ const Axion = () => {
       snapshotListenOptions: { includeMetadataChanges: true },
     }
   );
-  if (!value) {
-    const userRef = doc(getFirestore(firebaseApp), 'users', address);
-    setDoc(userRef, {
-      wallet: address,
-      coins: earnedPoints,
-    });
-  }
 
-  console.log('value', value?.data());
+  useEffect(() => {
+    if (!value) {
+      const userRef = doc(getFirestore(firebaseApp), 'users', address);
+      setDoc(userRef, {
+        wallet: address,
+        coins: earnedPoints,
+      });
+    }
+    console.log('value', value?.data());
+  }, [value]);
 
   // init toasts
   const toast = useToast();
@@ -101,14 +115,14 @@ const Axion = () => {
     setNearbyWayspots(wayspotArray);
   };
 
-  useEffect(() => {
-    //@ts-ignore
-    window.XRIFrame.registerXRIFrame(IFRAME_ID);
-    return () => {
-      //@ts-ignore
-      window.XRIFrame.deregisterXRIFrame();
-    };
-  }, []);
+  // useEffect(() => {
+  //   //@ts-ignore
+  //   window.XRIFrame.registerXRIFrame(IFRAME_ID);
+  //   return () => {
+  //     //@ts-ignore
+  //     window.XRIFrame.deregisterXRIFrame();
+  //   };
+  // }, []);
 
   // get player location from 8thWall
   useEffect(() => {
@@ -127,7 +141,9 @@ const Axion = () => {
     // handle messages from 8thWall child iFrame
     window.addEventListener('message', (message) => {
       if (
-        message.origin == 'https://spotxgames.8thwall.app/sx-axion-sprint-1/'
+        message.origin ==
+          'https://jackson-default-spotxgames.dev.8thwall.app' ||
+        'https://spotxgames.8thwall.app'
       ) {
         switch (message.data.name) {
           case 'playerPosition':
@@ -147,7 +163,7 @@ const Axion = () => {
           default:
             break;
         }
-        // console.log(message);
+        // console.log(message.origin);
         // console.log(message.data);
 
         return; // Skip message in this event listener
@@ -171,20 +187,16 @@ const Axion = () => {
       input !== null && input.tagName === 'IFRAME';
 
     let frame = document.getElementById('my-iframe');
-    // if (isIFrame(frame) && frame.contentWindow) {
-    //   frame.contentWindow.postMessage(
-    //     { name: 'stopar', value: true },
-    //     'https://jackson-default-spotxgames.dev.8thwall.app/sx-axion-sprint-1/'
-    //   );
-    // }
 
     const endGame = async () => {
       // alert('game over!');
       const userRef = doc(getFirestore(firebaseApp), 'users', address);
-      setDoc(userRef, {
-        wallet: address,
-        coins: earnedPoints + value?.data().coins || 0,
-      });
+      const currentCoints = value?.data().coins;
+      if (earnedPoints + currentCoints > currentCoints)
+        setDoc(userRef, {
+          wallet: address,
+          coins: earnedPoints + value?.data().coins,
+        });
 
       toast({
         title: `Collection Complete!`,
@@ -199,7 +211,7 @@ const Axion = () => {
         if (isIFrame(frame) && frame.contentWindow) {
           frame.contentWindow.postMessage(
             { name: 'stopar', value: true },
-            'https://spotxgames.8thwall.app/sx-axion-sprint-1/'
+            'https://spotxgames.8thwall.app'
           );
         }
       }, 3500);
@@ -220,8 +232,7 @@ const Axion = () => {
   return (
     <>
       <Center>
-        <Box
-          // style={{ height: "75vh", width: "100vw" }}
+        <div
           dangerouslySetInnerHTML={{
             __html: `<iframe
             id="my-iframe"
@@ -230,7 +241,7 @@ const Axion = () => {
             src="https://spotxgames.8thwall.app/sx-axion-sprint-1/">
             </iframe>`,
           }}
-        />
+        ></div>
       </Center>
 
       <Box

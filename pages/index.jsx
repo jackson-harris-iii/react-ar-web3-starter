@@ -1,9 +1,8 @@
 import Layout from '../Components/Layout';
 import Axion from '../Components/Axion';
 import { useAccount } from 'wagmi'
-import { Container, Spinner, Box, Grid, GridItem } from '@chakra-ui/react';
-import { useWeb3AuthHook } from '../utils/web3AuthContext';
-import { use, useEffect } from 'react';
+import { Container, Spinner, Box, Grid, GridItem, Text, Center, Card, Image } from '@chakra-ui/react';
+import { Web3Button } from '@web3modal/react';
 
 const Homepage = () => {
 
@@ -34,11 +33,38 @@ const Homepage = () => {
   
   if (isDisconnected) {
     return (
-    <Layout>
-      <Container mt={5}>
+    <Container mt={20}>
+      <Center>
+    
+      <Card mt={5} p={10}>
+        <Grid justifyContent={'center'}>
+          <GridItem>
+            <Center>
+              <Text fontSize='5xl'>Welcome</Text>
+            </Center>
+          </GridItem>
+          <Center>
+            <Image
+              borderRadius='full'
+              boxSize='150px'
+              src='./spotxgames-favicon.png'
+              alt='Dan Abramov'
+              mb={3}
+            />
+          </Center>
+        <GridItem>
         Connect or create a wallet to get started 
-      </Container>
-    </Layout>
+        </GridItem>
+        <GridItem alignItems={'Grid'} justifyContent={'center'} mt={5}>
+          <Center>
+          <Web3Button />
+          </Center>
+        </GridItem>
+        </Grid>
+      </Card>
+      </Center>
+
+    </Container>
     )    
   }
 
