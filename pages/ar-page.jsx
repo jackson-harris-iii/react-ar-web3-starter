@@ -157,7 +157,7 @@ const ArPage = () => {
     window.addEventListener("gameStart", gameStart)
 
     window.addEventListener('message', message => {
-      if (message.origin == 'https://jackson-default-spotxgames.dev.8thwall.app') {
+      if (message.origin == 'https://spotxgames.8thwall.app/sx-axion-sprint-1/') {
         
         switch (message.data.name) {
           case 'playerPosition':
@@ -233,7 +233,7 @@ const ArPage = () => {
             id="my-iframe"
             style="border: 0; width: 75vh; height: 75vh"
             allow="camera;gyroscope;accelerometer;magnetometer;xr-spatial-tracking;microphone;geolocation;"
-            src="https://jackson-default-spotxgames.dev.8thwall.app/sx-axion-sprint-1/">
+            src="https://spotxgames.8thwall.app/sx-axion-sprint-1/">
             </iframe>`,
           }}
         />

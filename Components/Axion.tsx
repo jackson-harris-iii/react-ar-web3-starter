@@ -199,7 +199,7 @@ const Axion = () => {
         if (isIFrame(frame) && frame.contentWindow) {
           frame.contentWindow.postMessage(
             { name: 'stopar', value: true },
-            'https://jackson-default-spotxgames.dev.8thwall.app/sx-axion-sprint-1/'
+            'https://spotxgames.8thwall.app/sx-axion-sprint-1/'
           );
         }
       }, 3500);
