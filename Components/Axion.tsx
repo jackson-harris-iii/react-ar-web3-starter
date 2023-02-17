@@ -127,7 +127,7 @@ const Axion = () => {
     // handle messages from 8thWall child iFrame
     window.addEventListener('message', (message) => {
       if (
-        message.origin == 'https://jackson-default-spotxgames.dev.8thwall.app'
+        message.origin == 'https://spotxgames.8thwall.app/sx-axion-sprint-1/'
       ) {
         switch (message.data.name) {
           case 'playerPosition':
