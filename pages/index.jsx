@@ -1,4 +1,5 @@
 import Layout from '../Components/Layout';
+import Axion from '../Components/Axion';
 import { useAccount } from 'wagmi'
 import { Container, Spinner, Box, Grid, GridItem } from '@chakra-ui/react';
 import { useWeb3AuthHook } from '../utils/web3AuthContext';
@@ -9,13 +10,6 @@ const Homepage = () => {
   //hook to access wallet connect user address
   const { address, isConnecting, isDisconnected } = useAccount()
   
-  //hook to access web3auth user address
-  const { w3aAddress, w3aUserInfo, w3aAuthenticatedUser  } = useWeb3AuthHook()
-
-  //force update and do cool things when we have an address
-  useEffect(() => {
-
-  },[address, w3aAddress])
 
   if (isConnecting) {
     return ( 
@@ -34,11 +28,11 @@ const Homepage = () => {
   </Container>
   )}
 
-  if (address || w3aAddress) {
-    return <Layout>Hola {address || w3aAddress} !</Layout>  
+  if (address) {
+    return <Axion />
   }
   
-  if (isDisconnected || !w3aAddress) {
+  if (isDisconnected) {
     return (
     <Layout>
       <Container mt={5}>

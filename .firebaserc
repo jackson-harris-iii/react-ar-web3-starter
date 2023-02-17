@@ -1,0 +1,14 @@
+{
+  "projects": {
+    "default": "spotx-prod"
+  },
+  "targets": {
+    "spotx-prod": {
+      "hosting": {
+        "axion1": [
+          "axion1"
+        ]
+      }
+    }
+  }
+}

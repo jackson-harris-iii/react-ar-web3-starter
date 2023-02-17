@@ -29,10 +29,9 @@ import Link from 'next/link';
 
 // more details on this here https://docs.walletconnect.com/2.0/web3modal/react/components
 import { Web3Button } from '@web3modal/react';
-import { useWeb3AuthHook } from '../utils/web3AuthContext';
 import { useAccount } from 'wagmi';
-import { HamburgerIcon, CloseIcon } from '@chakra-ui/icons';
-import { useContext, useEffect } from 'react';
+import { Icon } from '@chakra-ui/react';
+import { GrMapLocation } from 'react-icons/gr';
 
 const Navigation = () => {
   const pages = [
@@ -42,15 +41,15 @@ const Navigation = () => {
   ];
   const { isOpen, onOpen, onClose } = useDisclosure();
   const { address, isConnecting, isDisconnected } = useAccount();
-  const {
-    w3aAddress,
-    web3authLogin,
-    web3AuthLogout,
-    web3authProvider,
-    gettingAccount,
-  } = useWeb3AuthHook();
+  // const {
+  //   w3aAddress,
+  //   web3authLogin,
+  //   web3AuthLogout,
+  //   web3authProvider,
+  //   gettingAccount,
+  // } = useWeb3AuthHook();
 
-  useEffect(() => {}, [web3authProvider]);
+  // useEffect(() => {}, [web3authProvider]);
 
   return (
     <>
@@ -61,7 +60,7 @@ const Navigation = () => {
         boxShadow="xl"
       >
         <Flex h={16} alignItems={'center'} justifyContent={'space-between'}>
-          <IconButton
+          {/* <IconButton
             size={'md'}
             icon={isOpen ? <CloseIcon /> : <HamburgerIcon />}
             aria-label={'Open Menu'}
@@ -69,11 +68,14 @@ const Navigation = () => {
             onClick={isOpen ? onClose : onOpen}
             mr={2}
             bg={useColorModeValue('blue.400', 'blue.400')}
-          />
+          /> */}
+
+          <Icon as={GrMapLocation} sx={{ fontSize: '3em' }} />
+
           <HStack spacing={8} alignItems={'center'}>
-            <Box>
+            {/* <Box>
               <Heading size="m">AR Web3 Starter</Heading>
-            </Box>
+            </Box> */}
             <HStack
               as={'nav'}
               spacing={4}
@@ -89,24 +91,7 @@ const Navigation = () => {
             </HStack>
           </HStack>
           <Flex alignItems={'center'}>
-            {w3aAddress ? (
-              <Button onClick={web3AuthLogout}>Logout</Button>
-            ) : (
-              <>
-                <Web3Button />
-                {/* If we're logged in with wallet connect we don't want to show the Torus login button */}
-                {address ? null : (
-                  <Button ml={1} onClick={web3authLogin}>
-                    Web2 Sign-In
-                  </Button>
-                )}
-              </>
-            )}
-            {gettingAccount ? (
-              <>
-                <Spinner />
-              </>
-            ) : null}
+            <Web3Button />
           </Flex>
         </Flex>
 

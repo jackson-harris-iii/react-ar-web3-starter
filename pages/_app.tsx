@@ -9,6 +9,11 @@ import {
 import { Web3Modal } from '@web3modal/react';
 import { configureChains, createClient, WagmiConfig } from 'wagmi';
 import { mainnet, polygon } from 'wagmi/chains';
+import Script from 'next/script';
+import { useCollection, useDocument } from 'react-firebase-hooks/firestore';
+import { useState, useEffect } from 'react';
+import { firebaseApp } from '../utils/firebase';
+import { doc, getFirestore } from 'firebase/firestore';
 
 const App = ({ Component, pageProps }) => {
   const chains = [mainnet, polygon];
@@ -55,10 +60,15 @@ const App = ({ Component, pageProps }) => {
         ></script>
 
         <script defer src="arComponent.js"></script>
+        <link
+          href="https://api.mapbox.com/mapbox-gl-js/v2.8.2/mapbox-gl.css"
+          rel="stylesheet"
+        />
       </Head>
+      <Script></Script>
       <ChakraProvider>
         <WagmiConfig client={wagmiClient}>
-          <Component {...pageProps} />
+          <Component {...pageProps} id="main" />
         </WagmiConfig>
       </ChakraProvider>
       <Web3Modal

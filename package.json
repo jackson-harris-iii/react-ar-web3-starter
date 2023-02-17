@@ -10,7 +10,8 @@
     "build": "next build",
     "start": "next start",
     "httpsStart": "cross-env HTTPS=true SSL_CRT_FILE=cert.pem SSL_KEY_FILE=key.pem next dev",
-    "lint": "next lint"
+    "lint": "next lint",
+    "export": "next export"
   },
   "dependencies": {
     "@chakra-ui/icons": "^2.0.17",
@@ -25,11 +26,15 @@
     "@web3modal/react": "^2.0.0",
     "cross-env": "^7.0.3",
     "ethers": "^5.7.2",
+    "firebase": "^9.17.1",
     "framer-motion": "^8.5.3",
+    "mapbox-gl": "^2.12.1",
     "mkcert": "^1.5.1",
     "next": "^13.1.5",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
+    "react-firebase-hooks": "^5.1.1",
+    "react-icons": "^4.7.1",
     "wagmi": "^0.11.0"
   },
   "devDependencies": {
