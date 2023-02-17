@@ -74,8 +74,8 @@ const RtsView = ({ playerPosition, nearbyWayspots, loadingNearbyWayspots }) => {
           },
         })),
       };
-      console.log('heres the map', map);
-      console.log('heres the geojson', geojson);
+      // console.log('heres the map', map);
+      // console.log('heres the geojson', geojson);
 
       map.on('load', () => {
         geojson.features.forEach((marker) => {
@@ -90,23 +90,6 @@ const RtsView = ({ playerPosition, nearbyWayspots, loadingNearbyWayspots }) => {
             .addTo(map);
         });
 
-        // map.addSource('wayspots', {
-        //   type: 'geojson',
-        //   data: geojson,
-        // });
-
-        // map.addLayer({
-        //   id: 'wayspots-layer',
-        //   type: 'circle',
-        //   source: 'wayspots',
-        //   paint: {
-        //     'circle-radius': 4,
-        //     'circle-stroke-width': 2,
-        //     'circle-color': 'red',
-        //     'circle-stroke-color': 'white',
-        //   },
-        // });
-
         if (geoLocateControl) {
           geoLocateControl.trigger();
         }
@@ -116,7 +99,7 @@ const RtsView = ({ playerPosition, nearbyWayspots, loadingNearbyWayspots }) => {
 
   return (
     <>
-      {loadingNearbyWayspots?.loading ? (
+      {nearbyWayspots?.length === 0 ? (
         <p>still getting the lay of the land...</p>
       ) : null}
       <Center>

@@ -18,6 +18,7 @@ import {
   Image,
   CardBody,
   SimpleGrid,
+  Input,
 } from '@chakra-ui/react';
 import Link from 'next/link';
 import { useState, useEffect } from 'react';
@@ -55,6 +56,7 @@ const Axion = () => {
     useState<CollectionReference<DocumentData>>();
   const [users, setUsers] = useState<CollectionReference<DocumentData>>();
   const [player, setPlayer] = useState<DocumentData>();
+  const [tempId, setTempId] = useState('');
 
   const shopItems = [
     { name: 'Limited Set', price: 2000, image: './limited-frame.png' },
@@ -243,6 +245,35 @@ const Axion = () => {
     return () => clearInterval(interval);
   }, [isActive, seconds]);
 
+  const handleInput = (e) => {
+    setTempId(e.target.value);
+    console.log(e.target.value);
+  };
+
+  const handleSubmitId = () => {
+    if (
+      tempId?.length !==
+      'R4PLAO6GZ6VLMII5GACXCKHELAG4NXATH4GR3AU5GIFTKHEUNQJA'.length
+    ) {
+      toast({
+        title: `invalid id`,
+        status: 'error',
+        isClosable: true,
+        description: `Grab this from the url of the my collectibles screen`,
+      });
+    }
+
+    if (
+      !player.tradingpostId &&
+      tempId?.length ===
+        'R4PLAO6GZ6VLMII5GACXCKHELAG4NXATH4GR3AU5GIFTKHEUNQJA'.length
+    ) {
+      setDoc(userRef, {
+        tradingpostId: tempId,
+      });
+    }
+  };
+
   const purchaseItem = (item) => {
     console.log('purchase attempt', item);
     if (player.coins < item.price) {
@@ -405,7 +436,7 @@ const Axion = () => {
       <Modal isOpen={isOpenProfile} onClose={onCloseProfile} size="full">
         <ModalOverlay />
         <ModalContent>
-          <Grid p={2} h="95vh" templateRows="repeat(12, 1fr)">
+          <Grid p={2} h="95vh" templateRows="repeat(12, 1fr)" gap={3}>
             <GridItem rowSpan={1}>
               <IconButton
                 size={'md'}
@@ -416,19 +447,74 @@ const Axion = () => {
                 {'<--'}
               </IconButton>
             </GridItem>
-          </Grid>
-          <Grid>
-            <GridItem>
-              <h4>Your Items</h4>
-            </GridItem>
+            <Grid>
+              <GridItem>
+                <Card mb={5}>
+                  <CardBody>
+                    <Text fontSize={'2xl'}>Your Wallet</Text>
+                    <Center>
+                      <Web3Button />
+                    </Center>
+                  </CardBody>
+                </Card>
+              </GridItem>
 
-            <GridItem>
-              <h4>Your Wallet Adddress</h4>
-            </GridItem>
+              <GridItem>
+                <Card mb={5}>
+                  <CardBody>
+                    <a href={'https://niantic.trade'} target="_blank">
+                      <Text fontSize={'2xl'}>Avatar</Text>
+                      <Center>
+                        <Image
+                          borderRadius="full"
+                          boxSize="150px"
+                          src="./doty-avatar2.png"
+                          alt="Spotx Logo"
+                          mb={3}
+                        />
+                      </Center>
+                    </a>
+                  </CardBody>
+                </Card>
+              </GridItem>
 
-            <GridItem>
-              <h4>Trading Post Profile</h4>
-            </GridItem>
+              <GridItem>
+                <Card mb={5}>
+                  <CardBody>
+                    <a
+                      href={
+                        player?.tradingpostId
+                          ? `https://tradingpost.nianticlabs.com/en/user/${player.tradingpostId}`
+                          : 'https://niantic.trade'
+                      }
+                      target="_blank"
+                    >
+                      <Text fontSize={'2xl'}>Trading Post Profile</Text>
+                      <Center>
+                        <Image maxWidth={'50vw'} src="./tradingpost-logo.png" />
+                      </Center>
+                    </a>
+                    {player?.tradingpostId ? (
+                      player?.tradingpostId
+                    ) : (
+                      <>
+                        <span>Enter TradingPost ID:</span>
+                        <Text fontSize={'xs'}>
+                          ex:
+                          R4PLAO6GZ6VLMII5GACXCKHELAG4NXATH4GR3AU5GIFTKHEUNQJA
+                        </Text>
+                        <Grid>
+                          <Input onChange={(e) => handleInput(e)}></Input>
+                          <Button onClick={() => handleSubmitId()}>
+                            Submit
+                          </Button>
+                        </Grid>
+                      </>
+                    )}
+                  </CardBody>
+                </Card>
+              </GridItem>
+            </Grid>
           </Grid>
         </ModalContent>
       </Modal>

@@ -48,7 +48,7 @@ const Homepage = () => {
               borderRadius='full'
               boxSize='150px'
               src='./spotxgames-favicon.png'
-              alt='Dan Abramov'
+              alt='Spotx Logo'
               mb={3}
             />
           </Center>
