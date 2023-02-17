@@ -227,7 +227,7 @@ const Axion = () => {
             id="my-iframe"
             style="border: 0; width: 75vh; height: 90vh"
             allow="camera;gyroscope;accelerometer;magnetometer;xr-spatial-tracking;microphone;geolocation;"
-            src="https://jackson-default-spotxgames.dev.8thwall.app/sx-axion-sprint-1/">
+            src="https://spotxgames.8thwall.app/sx-axion-sprint-1/">
             </iframe>`,
           }}
         />

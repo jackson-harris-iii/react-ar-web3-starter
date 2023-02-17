@@ -27,7 +27,11 @@ const App = ({ Component, pageProps }) => {
 
   const wagmiClient = createClient({
     autoConnect: true,
-    connectors: modalConnectors({ appName: 'web3Modal', chains }),
+    connectors: modalConnectors({
+      appName: 'web3Modal',
+      chains,
+      projectId: process.env.NEXT_PUBLIC_WALLET_CONNECT_PROJECT_ID,
+    }),
     provider,
   });
 
