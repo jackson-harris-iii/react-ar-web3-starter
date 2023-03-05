@@ -3,11 +3,33 @@ import Axion from '../Components/Axion';
 import { useAccount } from 'wagmi'
 import { Container, Spinner, Box, Grid, GridItem, Text, Center, Card, Image } from '@chakra-ui/react';
 import { Web3Button } from '@web3modal/react';
+import Launcher from '../Components/Launcher'
+import { useEffect, useState } from 'react';
+import { Network, Alchemy } from 'alchemy-sdk';
 
 const Homepage = () => {
 
   //hook to access wallet connect user address
   const { address, isConnecting, isDisconnected } = useAccount()
+  const [nfts, setNfts] = useState()
+
+  const settings = {
+    apiKey: 'rdgGoCUHn-B1Ps8l14VmuPcM3nutths8', // Replace with your Alchemy API Key.
+    network: Network.ETH_GOERLI, // Replace with your network.
+  };
+
+
+  useEffect(() => {
+    const getNfts = async () => {
+      const alchemy = new Alchemy(settings);
+      const nfts = await alchemy.nft.getNftsForOwner(address,{contractAddresses:['0xf04839c00be097e6aa7a596cbdff707d29aeca27']})
+      // const nfts = await alchemy.getNftMetadata('')
+      console.log('what are those???', nfts)
+      setNfts(nfts.ownedNfts)
+    };   
+    getNfts()
+
+  }, [address])
   
 
   if (isConnecting) {
@@ -28,7 +50,7 @@ const Homepage = () => {
   )}
 
   if (address) {
-    return <Axion />
+    return <Launcher nfts={nfts}/>
   }
   
   if (isDisconnected) {

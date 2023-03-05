@@ -8,7 +8,7 @@ import {
 } from '@web3modal/ethereum';
 import { Web3Modal } from '@web3modal/react';
 import { configureChains, createClient, WagmiConfig } from 'wagmi';
-import { mainnet, polygon } from 'wagmi/chains';
+import { mainnet, polygon, goerli } from 'wagmi/chains';
 import Script from 'next/script';
 import { useCollection, useDocument } from 'react-firebase-hooks/firestore';
 import { useState, useEffect } from 'react';
@@ -16,7 +16,7 @@ import { firebaseApp } from '../utils/firebase';
 import { doc, getFirestore } from 'firebase/firestore';
 
 const App = ({ Component, pageProps }) => {
-  const chains = [mainnet, polygon];
+  const chains = [mainnet, polygon, goerli];
 
   // Wagmi client
   const { provider } = configureChains(chains, [
@@ -63,7 +63,7 @@ const App = ({ Component, pageProps }) => {
         <link rel="apple-touch-icon" sizes="180x180" href="/public/myne.png" />
         <link rel="apple-touch-icon" sizes="167x167" href="/public/myne.png" />
 
-        <link
+        {/* <link
           rel="icon"
           type="image/png"
           sizes="32x32"
@@ -85,7 +85,7 @@ const App = ({ Component, pageProps }) => {
         <link
           rel="stylesheet"
           href="https://fonts.googleapis.com/css?family=Roboto:300,400,500"
-        />
+        /> */}
 
         <meta name="twitter:card" content="summary" />
         <meta name="twitter:url" content="https://yourdomain.com" />

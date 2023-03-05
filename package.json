@@ -24,6 +24,7 @@
     "@web3auth/openlogin-adapter": "^4.2.4",
     "@web3modal/ethereum": "^2.0.0",
     "@web3modal/react": "^2.0.0",
+    "alchemy-sdk": "^2.5.0",
     "cross-env": "^7.0.3",
     "ethers": "^5.7.2",
     "firebase": "^9.17.1",
