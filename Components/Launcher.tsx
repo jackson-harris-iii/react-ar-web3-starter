@@ -16,7 +16,7 @@ const Launcher = ({ nfts }) => {
             id="game"
             style="border: 0; width: 35vh; height: 50vh"
             allow="camera;gyroscope;accelerometer;magnetometer;xr-spatial-tracking;microphone;geolocation;"
-            src="https://w3s.link/ipfs/${nft.rawMetadata.animation_url.replace(
+            src="https://nftstorage.link/ipfs/${nft.rawMetadata.animation_url.replace(
               'ipfs://',
               ''
             )}">

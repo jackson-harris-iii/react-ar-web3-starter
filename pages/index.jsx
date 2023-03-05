@@ -22,7 +22,7 @@ const Homepage = () => {
   useEffect(() => {
     const getNfts = async () => {
       const alchemy = new Alchemy(settings);
-      const nfts = await alchemy.nft.getNftsForOwner(address,{contractAddresses:['0xf04839c00be097e6aa7a596cbdff707d29aeca27']})
+      const nfts = await alchemy.nft.getNftsForOwner(address,{contractAddresses:['0x9e4d743b7ebf3be25ff997151b0260e2edc5902a']})
       // const nfts = await alchemy.getNftMetadata('')
       console.log('what are those???', nfts)
       setNfts(nfts.ownedNfts)
