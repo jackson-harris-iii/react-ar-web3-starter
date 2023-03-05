@@ -15,7 +15,16 @@ const httpsOptions = {
 app.prepare().then(() => {
   createServer(httpsOptions, (req, res) => {
     const parsedUrl = parse(req.url, true);
-    handle(req, res, parsedUrl);
+    const { pathname } = parsedUrl;
+    if (
+      pathname === '/sw.js' ||
+      /^\/(workbox|worker|fallback)-\w+\.js$/.test(pathname)
+    ) {
+      const filePath = join(__dirname, '.next', pathname);
+      app.serveStatic(req, res, filePath);
+    } else {
+      handle(req, res, parsedUrl);
+    }
   }).listen(port, (err) => {
     if (err) throw err;
     console.log('ready - started server on url: https://localhost:' + port);

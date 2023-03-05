@@ -45,6 +45,7 @@ import {
 import { firebaseApp } from '../utils/firebase';
 
 const Axion = () => {
+  console.log('this is the firebaseApp', firebaseApp);
   const [earnedPoints, setEarnedPoints] = useState(0);
   const [seconds, setSeconds] = useState(15);
   const [isActive, setIsActive] = useState(false);
