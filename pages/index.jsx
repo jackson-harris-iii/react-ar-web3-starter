@@ -13,16 +13,17 @@ const Homepage = () => {
   const { address, isConnecting, isDisconnected } = useAccount()
   const [nfts, setNfts] = useState()
 
-  const settings = {
-    apiKey: 'rdgGoCUHn-B1Ps8l14VmuPcM3nutths8', // Replace with your Alchemy API Key.
-    network: Network.ETH_GOERLI, // Replace with your network.
-  };
+  
 
 
   useEffect(() => {
+    const settings = {
+      apiKey: 'rdgGoCUHn-B1Ps8l14VmuPcM3nutths8', // Replace with your Alchemy API Key.
+      network: Network.ETH_GOERLI, // Replace with your network.
+    };
     const getNfts = async () => {
       const alchemy = new Alchemy(settings);
-      const nfts = await alchemy.nft.getNftsForOwner(address,{contractAddresses:['0x9e4d743b7ebf3be25ff997151b0260e2edc5902a']})
+      const nfts = await alchemy.nft.getNftsForOwner(address,{contractAddresses:['0x9E4d743B7ebF3BE25Ff997151b0260e2Edc5902A']})
       // const nfts = await alchemy.getNftMetadata('')
       console.log('what are those???', nfts)
       setNfts(nfts.ownedNfts)

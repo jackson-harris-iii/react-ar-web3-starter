@@ -1,6 +1,18 @@
 {
   "name": "Axion Demo App NFT",
-  "description": "A full application, accessible as an NFT, sold as an NFT, and transferred as an NFT",
-  "image": "https://bafkreiclfla2pkoxdeajwsrn76vswovycymvytsvaw4lmueyhh2wujeuji.ipfs.nftstorage.link/",
-  "animation_url": "ipfs://bafybeigrbp6i7vxg7wcypprvi4ehcy5q7rpwmb34iijeusf5wzrkdbb36i"
+  "description": "A full application, accessible as an NFT, sold as an NFT, and transferred as an NFT. The game of a unity template. The FPS Microgame Template is a 3D First Person Shooter game that you can mod and customize. Complete the Creative Mods to build on the project and make it more your own, while learning the basics of Unity.",
+  "image": "https://connect-prd-cdn.unity.com/20191022/learn/images/19f1f73a-f566-4358-84c7-c0e2acf720d2_FPS_Split_1800.png.400x0x1.webp",
+  "animation_url": "https://connect-prd-cdn.unity.com/20200714/learn/images/15bbcceb-af63-4de3-ba5c-9d76a33f241e_image1.gif._gif_.mp4",
+  "attributes": [
+    {
+      "trait_type": "platform",
+      "value": "unity"
+    }
+  ],
+  "build_files": {
+    "loaderUrl": "ipfs://bafybeicqxqlda3rj6irdhy76hoxxlzeyvqavuvjeimevajaawf5tkwlumm/build-loader.js",
+    "dataUrl": "ipfs://bafybeicqxqlda3rj6irdhy76hoxxlzeyvqavuvjeimevajaawf5tkwlumm/build.data",
+    "frameworkUrl": "ipfs://bafybeicqxqlda3rj6irdhy76hoxxlzeyvqavuvjeimevajaawf5tkwlumm/build-framework.js",
+    "codeUrl": "ipfs://bafybeicqxqlda3rj6irdhy76hoxxlzeyvqavuvjeimevajaawf5tkwlumm/build.wasm"
+  }
 }
